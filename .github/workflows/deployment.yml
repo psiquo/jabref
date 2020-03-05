@@ -106,6 +106,8 @@ jobs:
       - name: Rename files
         run: |
           cd build/distribution
+          ls -la
+          ls -la *${{steps.gitversion.outputs.AssemblySemVer }}*
           for f in *; do
              mv "$f" "${f/${{ steps.gitversion.outputs.AssemblySemVer }}/${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}}"
              mv "$f" "${f/portable/${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}-portable}"
