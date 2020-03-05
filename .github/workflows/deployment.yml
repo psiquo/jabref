@@ -106,8 +106,10 @@ jobs:
       - name: Rename files
         run: |
           cd build/distribution
-          rename 's/${{ steps.gitversion.outputs.AssemblySemVer }}/${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}/' *
-          rename 's/porable/${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}-portable/' *
+          for f in *; do
+             mv "$f" "${f/${{ steps.gitversion.outputs.AssemblySemVer }}/${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}}"
+             mv "$f" "${f/portable/${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}-portable}"
+          done
         shell: bash
       - name: Upload to GitHub workflow artifacts store
         uses: actions/upload-artifact@master
